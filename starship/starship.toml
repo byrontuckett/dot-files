@@ -1,0 +1,123 @@
+format = """
+[│](bold green)$directory\
+$package\
+$git_branch\
+$git_state\
+$git_status\
+$git_metrics\
+$azure\
+$python\
+$nodejs\
+$memory_usage\
+$vagrant\
+$kubernetes\
+$terraform\
+$docker_context\
+$fill\
+$cmd_duration $jobs $time\
+$version
+[└─](bold green)$character """
+
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Inserts a blank line between shell prompts
+add_newline = false
+
+[fill]
+symbol = " "
+
+[git_metrics]
+disabled = false
+
+# Replace the "❯" symbol in the prompt with "➜"
+[character] # The name of the module we are configuring is "character"
+success_symbol = "[❯](green)"
+error_symbol = "[❯](red)"
+vicmd_symbol = "[❮](purple)"
+
+# Disable the package module, hiding it from the prompt completely
+[package]
+disabled = true
+
+# Azure Stuff
+[azure]
+disabled = false
+format = "on [$symbol($subscription)]($style) "
+symbol = "ﴃ "
+style = "blue bold"
+
+[battery]
+full_symbol = "🔋 "
+charging_symbol = "⚡️ "
+discharging_symbol = "💀 "
+
+[[battery.display]]
+threshold = 10
+style = "bold red"
+
+
+[[battery.display]] # "bold yellow" style and 💦 symbol when capacity is between 10% and 30%
+threshold = 30
+style = "bold yellow"
+discharging_symbol = "💦"
+
+
+[directory]
+truncation_symbol = "…/"
+style = "blue"
+read_only = " "
+truncation_length = 4
+truncate_to_repo = false
+
+[docker_context]
+format = "via [🐋 $context](blue bold)"
+
+
+[git_branch]
+#truncation_length = 12
+#truncation_symbol = "..."
+#ignore_branches = ["master", "main"]
+always_show_remote = false
+symbol = " "
+format = "[$symbol$branch]($style) "
+#style = "bright-black"
+
+
+[git_commit]
+commit_hash_length = 6
+tag_symbol = "🔖 "
+
+
+[git_status]
+conflicted = "🏳"
+ahead = "🏎💨"
+behind = "😰"
+diverged = "😵"
+up_to_date = "✓"
+untracked = "🤷"
+stashed = "📦"
+modified = "📝"
+staged = '[++\($count\)](green)'
+renamed = "👅"
+deleted = "🗑"
+format = '([\[$all_status$ahead_behind\]]($style) )'
+
+[git_state]
+format = '\([$state( $progress_current/$progress_total)]($style)\) '
+
+[time]
+disabled = false
+style = "bold white"
+format = "[$time]($style)"
+
+[terraform]
+format = "[🏎💨 $version$workspace]($style) "
+
+[python]
+pyenv_version_name = true
+# Display the version of python from inside a local venv.
+#
+# Note this will only work when the venv is inside the project and it will only
+# work in the directory that contains the venv dir but maybe this is ok?
+python_binary = ["./venv/bin/python", "python", "python3", "python2"]
