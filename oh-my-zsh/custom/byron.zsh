@@ -35,8 +35,8 @@ new-project() {
 }
 
 alias ls='exa -lh --git --icons --group-directories-first'
-alias pcr='pre-commit run'
-alias pcra='pre-commit run --all'
+˜alias pcr='pre-commit run --show-diff-on-failure'
+alias pcra='pre-commit run --all --show-diff-on-failure'
 
 # Starship
 eval "$(starship init zsh)"
