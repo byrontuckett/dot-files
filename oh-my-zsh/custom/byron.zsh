@@ -24,20 +24,15 @@ alias v=vagrant
 now(){  date +"%Y-%m-%dT%H:%M:%S"}
 
 # New project quick mkdir, git init and open an editor
-new-project() {
-  projn=$1
-  if [[ -z "$projn" ]]; then read projn"?What is the project name? "; fi
-  #replace spaces with hyphens
-  #
-  echo "Creating project $projn"
-  md $projn && cd $_ && git init;
-  nvim .
-}
-
 alias ls='exa -lh --git --icons --group-directories-first'
-˜alias pcr='pre-commit run --show-diff-on-failure'
+alias pcr='pre-commit run --show-diff-on-failure'
 alias pcra='pre-commit run --all --show-diff-on-failure'
+alias n.='nvim .'  # nvim current directory
+alias dco="docker compose"
 
 # Starship
 eval "$(starship init zsh)"
-chuck_cow
+
+function tggd() {
+  git diff --name-only main..HEAD --diff-filter=AM | grep  '^environments/.*terragrunt.hcl\|^environments/.*module.yaml' | cut -d'/' -f2- | awk 'BEGIN{FS=OFS="/"}NF--' | sort -u
+}
